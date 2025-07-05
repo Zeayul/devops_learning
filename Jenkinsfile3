@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'tenant_id', defaultValue: '', description: 'Azure Tenant ID')
+        string(name: 'client_id', defaultValue: '', description: 'Azure Client ID')
+        password(name: 'client_secret', defaultValue: '', description: 'Azure Client Secret')
+
+        string(name: 'dname', defaultValue: '', description: 'User display name')
+        string(name: 'nname', defaultValue: '', description: 'User mail nickname')
+        string(name: 'pname', defaultValue: '', description: 'User principal name')
+        password(name: 'password', defaultValue: '', description: 'User password')
+    }
+
+    stages {
+        stage('Run Python Script') {
+            steps {
+                sh """
+                    python3 intra_id_creation2.py \
+                        --tenant_id "${params.tenant_id}" \
+                        --client_id "${params.client_id}" \
+                        --client_secret "${params.client_secret}" \
+                        --display_name "${params.dname}" \
+                        --mail_nickname "${params.nname}" \
+                        --user_principal_name "${params.pname}" \
+                        --password "${params.password}"
+                """
+            }
+        }
+    }
+}
