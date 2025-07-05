@@ -16,7 +16,7 @@ pipeline {
         stage('Run Python Script') {
             steps {
                 sh """
-                    python3 intra_id_creation2.py \
+                    python3 intra_id_creation3.py \
                         --tenant_id "${params.tenant_id}" \
                         --client_id "${params.client_id}" \
                         --client_secret "${params.client_secret}" \
