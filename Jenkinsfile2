@@ -18,11 +18,6 @@ pipeline {
                     export tenant_id=${pipeline_tenant_id}
                     export client_id=${pipeline_client_id}
                     export client_secret=${pipeline_client_secret}
-                    
-                    echo "Client Secret: \$client_secret"
-                    python3 -m venv venv
-                    . venv/bin/activate
-                    // pip3 install azure-identity msgraph-sdk
                     python3 microsoft_entra_id/user/create_user2.py
                 """
             }
