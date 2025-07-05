@@ -20,3 +20,6 @@ pipeline {
                     python3 microsoft_entra_id/user/create_user2.py
                 """
             }
+        }
+    }
+}
