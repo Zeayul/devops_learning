@@ -6,6 +6,12 @@ pipeline {
         pipeline_client_secret = credentials('JENKINS_CRED_CLIENT_SECRET')
     }
     stages {
+        stage('installing Python3.11venv')
+        {
+            steps {
+                    sh 'pip3 install --break-system-packages azure-identity msgraph-sdk' 
+                 }
+        }
         stage('Creating Azure user') {
             steps {
                 sh """
@@ -16,7 +22,7 @@ pipeline {
                     echo "Client Secret: \$client_secret"
                     python3 -m venv venv
                     . venv/bin/activate
-                    pip3 install azure-identity msgraph-sdk
+                    // pip3 install azure-identity msgraph-sdk
                     python3 microsoft_entra_id/user/create_user2.py
                 """
             }
