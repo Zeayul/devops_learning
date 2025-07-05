@@ -1,40 +1,52 @@
-# Code snippets are only available for the latest version. Current version is 1.x
-from msgraph import GraphServiceClient
+from msgraph.graph_service_client import GraphServiceClient
+from azure.identity import ClientSecretCredential
 from msgraph.generated.models.user import User
 from msgraph.generated.models.password_profile import PasswordProfile
-from azure.identity import ClientSecretCredential
 import asyncio
+import os
 # To initialize your graph_client, see https://learn.microsoft.com/en-us/graph/sdks/create-client?from=snippets&tabs=python
+
+tenant_id = os.getenv('tenant_id')
+client_id = os.getenv('client_id')
+client_secret = os.getenv('client_secret')
+
 scopes = ['https://graph.microsoft.com/.default']
 
-tenant_id = ''
-client_id = ''
-client_secret = ''
-
 # azure.identity
+# credential = DeviceCodeCredential(
+#     tenant_id=tenant_id,
+#     client_id=client_id)
+
 credential = ClientSecretCredential(
-    tenant_id,
-    client_id,
-	client_secret)
+      tenant_id,
+      client_id,
+      client_secret 
+  )
 
 graph_client = GraphServiceClient(credential, scopes)
 
 async def create_user():
-	request_body = User(
-		account_enabled = True,
-		display_name = "Anish Pailo",
-		mail_nickname = "Apailo",
-		user_principal_name = "apailo@devops.zea.com",
-		password_profile = PasswordProfile(
-			force_change_password_next_sign_in = True,
-			password = "xWwv",
-		),
-	)
+    try:
+        print("Creating user request...")
+        request_body = User(
+            account_enabled = True,
+            display_name = "Anish Pailo",
+            mail_nickname = "Apailo",
+            user_principal_name = "Apailo@zeayulhaque93gmail.onmicrosoft.com",
+            password_profile = PasswordProfile(
+                force_change_password_next_sign_in = True,
+                password = "eequei7queL1ai",
+            ),
+        )
 
-	result = await graph_client.users.post(request_body)
-	return result
-
+        print("Sending request to Microsoft Graph...")
+        result = await graph_client.users.post(request_body)
+        print("User created successfully!")
+        return result
+    except Exception as e:
+        print(f"Error occurred: {type(e).__name__}: {e}")
+        raise
 
 if __name__ == "__main__":
-	res = asyncio.run(create_user())
-	print(res)
+    result = asyncio.run(create_user())
+    print(result)
