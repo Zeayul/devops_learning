@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        pipline_tenand_id     = credentials('JENKINS_CRED_TENANT_ID')
+        pipeline_tenant_id     = credentials('JENKINS_CRED_TENANT_ID')
         pipeline_client_id = credentials('JENKINS_CRED_CLIENT_ID')
         pipeline_client_secret = credentials('JENKINS_CRED_CLIENT_SECRET')
     }
@@ -9,7 +9,7 @@ pipeline {
         stage('Creating Azure user') {
             steps {
                 sh """
-                    export tenant_id=${pipline_tenand_id}
+                    export tenant_id=${pipeline_tenant_id}
                     export client_id=${pipeline_client_id}
                     export client_secret=${pipeline_client_secret}
                     
